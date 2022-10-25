@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
+#include <string.h>
 //
 #include "types.h"
 
@@ -42,10 +43,10 @@ int main(int argc, char **argv)
   u64 r = atoll(argv[2]);
 
   //Print header
-  printf("%10s; %15s; %15s; %15s; %10s; %10s; %15s; %15s; %15s; %26s; %10s\n",
-	 "title",
-	 "KiB", "MiB", "GiB",
-	 "n", "r", "min", "max", "mean", "stddev (%)", "MiB/s");
+  /* printf("%10s; %15s; %15s; %15s; %10s; %10s; %15s; %15s; %15s; %26s; %10s\n", */
+	 /* "title", */
+	 /* "KiB", "MiB", "GiB", */
+	 /* "n", "r", "min", "max", "mean", "stddev (%)", "MiB/s"); */
   
   run_benchmark("IJK",   dgemm_ijk, n, r);
   run_benchmark("IKJ",   dgemm_ikj, n, r);
@@ -118,9 +119,13 @@ void run_benchmark(const ascii *title,
   //Size in MiB / time in seconds
   f64 mbps = size_mib / (mean / 1e9);
 
+  FILE* file;
+  char file_name[64];  
+  strcpy(file_name, title);
+  file = fopen(strcat(file_name, ".dat"), "a");
   //
-  printf("%10s; %15.3lf; %15.3lf; %15.3lf; %10llu; %10llu; %15.3lf; %15.3lf; %15.3lf; %15.3lf (%6.3lf %%); %10.3lf\n",
-	 title,
+  fprintf(file,/*%10s;*/" %15.3lf; %15.3lf; %15.3lf; %10llu; %10llu; %15.3lf; %15.3lf; %15.3lf; %15.3lf (%6.3lf %%); %10.3lf;",
+	 //title,
 	 3 * size_kib, //3 matices
 	 3 * size_mib, //3 matrices
 	 3 * size_gib, //3 matrices
@@ -133,6 +138,8 @@ void run_benchmark(const ascii *title,
 	 (dev * 100.0 / mean),
 	 mbps);
   
+  fclose(file);
+  file = NULL;
   //
   free(a);
   free(b);

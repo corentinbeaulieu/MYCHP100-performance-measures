@@ -10,6 +10,9 @@ INFO_FILE=./arch-info.txt
 echo -e "##### General CPU Informations #####\n" > $INFO_FILE
 cat $PROC_FILE >> $INFO_FILE
 
+echo -e "\n### Frequency Info ###\n" >> $INFO_FILE
+cpupower frequency-info >> $INFO_FILE 
+
 # Caches Information
 
 echo -e "\n\n##### Caches Informations #####\n" >> $INFO_FILE
@@ -37,5 +40,14 @@ do
 
   done
 
+done
+
+# Compilers info
+echo -e "\n\n##### Compilers Info #####\n\n" >> $INFO_FILE
+
+for cc in gcc clang
+do
+    echo -e "### $cc ###\n" >> $INFO_FILE
+    $cc --version >> $INFO_FILE
 done
 
