@@ -3,7 +3,8 @@
 
 PROC_FILE=/proc/cpuinfo
 CACHE_DIR=/sys/devices/system/cpu/cpu0/cache/index
-INFO_FILE=./arch-info.txt
+INFO_FILE=Rapport/arch-info.txt
+COMPILERS='gcc clang icc icx'
 
 # CPU Information
 
@@ -27,7 +28,7 @@ do
     echo -e "\n### Cache l$i ###\n" >> $INFO_FILE
   fi
 
-  index_files=$( ls $CACHE_DIR$i )
+  index_files=$( ls $CACHE_DIR$i 2>/dev/null)
   if [ $? -ne 0 ]
   then
     echo "DOES NOT EXIST ON THIS ARCHITECTURE" >> $INFO_FILE
@@ -45,9 +46,13 @@ done
 # Compilers info
 echo -e "\n\n##### Compilers Info #####\n\n" >> $INFO_FILE
 
-for cc in gcc clang
+for cc in $COMPILERS
 do
-    echo -e "### $cc ###\n" >> $INFO_FILE
-    $cc --version >> $INFO_FILE
+    echo -e "\n### $cc ###\n" >> $INFO_FILE
+    $cc --version 1>> $INFO_FILE 2>/dev/null
+    if [ $? -ne 0 ]
+    then
+       echo "Compiler not found on this computer" >> $INFO_FILE
+    fi
 done
 

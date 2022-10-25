@@ -42,26 +42,65 @@ void dgemm_iex(f64 *restrict a, f64 *restrict b, f64 *restrict c, u64 n)
 }
 
 //
-void dgemm_unroll(f64 *restrict a, f64 *restrict b, f64 *restrict c, u64 n)
+void dgemm_unroll4(f64 *restrict a, f64 *restrict b, f64 *restrict c, u64 n)
 {
 
   #define UNROLL4 4
   
   for (u64 i = 0; i < n; i++)
-    {
-      for (u64 k = 0; k < n; k++)
-	{
-	  const f64 _a_ = a[i * n + k];
-	  
-	  for (u64 j = 0; j < n; j += UNROLL4)
-	    {
-	      c[i * n + j]     +=  _a_ * b[k * n + j];
-	      c[i * n + j + 1] +=  _a_ * b[k * n + j + 1];
-	      c[i * n + j + 2] +=  _a_ * b[k * n + j + 2];
-	      c[i * n + j + 3] +=  _a_ * b[k * n + j + 3];
-	    }
-	}
+  {
+    for (u64 k = 0; k < n; k++)
+	  {
+	     const f64 _a_ = a[i * n + k];
+	
+       u64 j;
+       for (j = 0; j < n - UNROLL4; j += UNROLL4)
+       {
+          c[i * n + j]     +=  _a_ * b[k * n + j];
+          c[i * n + j + 1] +=  _a_ * b[k * n + j + 1];
+          c[i * n + j + 2] +=  _a_ * b[k * n + j + 2];
+          c[i * n + j + 3] +=  _a_ * b[k * n + j + 3];
+       }
+
+       while (j < n) {
+          c[i * n + j]     +=  _a_ * b[k * n + j];
+          j++;
+       }
     }
+  }
+}
+
+//
+void dgemm_unroll8(f64 *restrict a, f64 *restrict b, f64 *restrict c, u64 n)
+{
+
+  #define UNROLL8 8
+  
+  for (u64 i = 0; i < n; i++)
+  {
+    for (u64 k = 0; k < n; k++)
+	  {
+	     const f64 _a_ = a[i * n + k];
+	
+       u64 j;
+       for (j = 0; j < n - UNROLL8; j += UNROLL8)
+       {
+          c[i * n + j]     +=  _a_ * b[k * n + j];
+          c[i * n + j + 1] +=  _a_ * b[k * n + j + 1];
+          c[i * n + j + 2] +=  _a_ * b[k * n + j + 2];
+          c[i * n + j + 3] +=  _a_ * b[k * n + j + 3];
+          c[i * n + j + 4] +=  _a_ * b[k * n + j + 4];
+          c[i * n + j + 5] +=  _a_ * b[k * n + j + 5];
+          c[i * n + j + 6] +=  _a_ * b[k * n + j + 6];
+          c[i * n + j + 7] +=  _a_ * b[k * n + j + 7];
+       }
+
+       while (j < n) {
+          c[i * n + j]     +=  _a_ * b[k * n + j];
+          j++;
+       }
+    }
+  }
 }
 
 //
