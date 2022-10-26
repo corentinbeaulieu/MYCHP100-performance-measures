@@ -3,7 +3,7 @@
 
 PROC_FILE=/proc/cpuinfo
 CACHE_DIR=/sys/devices/system/cpu/cpu0/cache/index
-INFO_FILE=Rapport/arch-info.txt
+INFO_FILE=$RES_DIR/arch-info.txt
 COMPILERS='gcc clang icc icx'
 
 # CPU Information

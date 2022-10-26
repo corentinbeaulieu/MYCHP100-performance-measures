@@ -7,12 +7,12 @@ FILES=main.c tools.c kernels.c
 
 all: dgemm
 
-dgemm:
+dgemm: $(FILES) 
 ifeq ($(CC),icc)
 	@$(CC) $(CFLAGS) $(OFLAGS) $(FILES) -o $@ $(INTEL_LFLAGS)
 else
 ifeq ($(CC),icx)
-	@$(CC) $(CFLAGS) $(OFLAGS) $(FILES) -o $@ $(INTEL_LFLAGS) -L/opt/intel/oneapi/compiler/2022.1.0/linux/compiler/lib/intel64
+	@$(CC) $(CFLAGS) $(OFLAGS) $(FILES) -o $@ $(INTEL_LFLAGS) 
 else
 ifeq ($(CC),gcc)
 	@$(CC) $(CFLAGS) $(OFLAGS) $(FILES) -o $@ $(GNU_LFLAGS)
@@ -28,3 +28,4 @@ endif
 
 clean:
 	@rm -Rf dgemm
+	@rm -Rf *.dat
