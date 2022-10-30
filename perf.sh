@@ -3,7 +3,7 @@
 
 # Définition des variables
 SCR_DIR=Scripts
-BIN_DIR="dgemm dotprod" #reduc
+BIN_DIR="dgemm dotprod reduc"
 RES_DIR=RESULTS
 CC='gcc clang' # icx
 OFLAGS='-O0 -O1 -O2 -O3 -Ofast'
@@ -56,7 +56,7 @@ et des options de compilation\"" >> $plot_scr
   cd ..
   for data_file in $( ls $actual_dir | grep .dat )
   do
-      echo -e "\"$actual_dir/$data_file\" u 10:(\$9/\$7*\$10):xtic(11)\
+      echo -e "\"$actual_dir/$data_file\" u 11:(\$10/\$9*\$11):xtic(12)\
  t \"$( echo $data_file | cut -d '.' -f 1 )\", \\" >> $plot_scr
   done
   gnuplot $plot_scr
