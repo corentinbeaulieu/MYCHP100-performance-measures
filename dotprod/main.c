@@ -122,14 +122,14 @@ void run_benchmark(const ascii *title,
   strncpy(buf, title, 63);
   FILE *file = fopen(strcat(buf, ".dat"), "a");
   //
-  fprintf(file,/*%10s*/"%15.3lf; %15.3lf; %15.3lf; %10llu; %10llu; %15.3lf; %15.3lf; %15.3lf; %15.3lf (%6.3lf %%); %10.3lf; ", // d = %15.3lf
+  fprintf(file,/*%10s*/"%15.3lf; %15.3lf; %15.3lf; %10llu; %10llu; %15.3lf; %15.3lf; %15.3lf; %15.3lf; %15.3lf (%6.3lf %%); %10.3lf; ", 
 	 //title,
 	 2 * size_kib, //2 arrays
 	 2 * size_mib, //2 arrays
 	 2 * size_gib, //2 arrays
 	 n,
 	 r,
-	 //d,
+	 d,
 	 min,
 	 max,
 	 mean,
@@ -141,6 +141,4 @@ void run_benchmark(const ascii *title,
   //
   free(a);
   free(b);
-
-  printf("%15.3lf\n", d);
 }

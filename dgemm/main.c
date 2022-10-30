@@ -125,7 +125,7 @@ void run_benchmark(const ascii *title,
   strcpy(file_name, title);
   file = fopen(strcat(file_name, ".dat"), "a");
   //
-  fprintf(file,/*%10s;*/" %15.3lf; %15.3lf; %15.3lf; %10llu; %10llu; %15.3lf; %15.3lf; %15.3lf; %15.3lf (%6.3lf %%); %10.3lf;",
+  fprintf(file,/*%10s;*/" %15.3lf; %15.3lf; %15.3lf; %10llu; %10llu; ; %15.3lf; %15.3lf; %15.3lf; %15.3lf (%6.3lf %%); %10.3lf;",
 	 //title,
 	 3 * size_kib, //3 matices
 	 3 * size_mib, //3 matrices
