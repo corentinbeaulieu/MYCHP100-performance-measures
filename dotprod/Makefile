@@ -9,7 +9,7 @@ FILES=main.c tools.c kernels.c
 
 all: dotprod
 
-dotprod:
+dotprod: $(FILES)
 ifeq ($(CC),icc)
   @$(CC) $(CFLAGS) $(OFLAGS) $(FILES) -o $@ $(INTEL_LFLAGS)
 else
@@ -30,3 +30,4 @@ endif
 
 clean:
 	@rm -Rf dotprod
+	@rm -Rf *.dat

@@ -3,12 +3,12 @@
 
 # Définition des variables
 SCR_DIR=Scripts
-BIN_DIR=dgemm #dotprod reduc
+BIN_DIR="dgemm dotprod" #reduc
 RES_DIR=RESULTS
 CC='gcc clang' # icx
 OFLAGS='-O0 -O1 -O2 -O3 -Ofast'
 PLOT_BASE=$SCR_DIR/plot-base.gp
-N=300
+N=100
 R=10
 
 # preparing Results repository
@@ -24,7 +24,7 @@ for actual_dir in $BIN_DIR
 do
   # preparing gnuplot script
   plot_scr=plot_$actual_dir.gp
-  rm $plot_scr
+  rm -f $plot_scr
 
   cp $PLOT_BASE $plot_scr
   echo -e "set title \"Performance $actual_dir n=$N en fonction de l'implémentation \
