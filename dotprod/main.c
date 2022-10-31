@@ -53,6 +53,7 @@ int main(int argc, char **argv)
   run_benchmark("UNROLL4",  dotprod_unroll4,  n, r);
   run_benchmark("UNROLL8",  dotprod_unroll8,  n, r);
   run_benchmark("UNROLL16", dotprod_unroll16, n, r);
+  run_benchmark("CBLAS",    dotprod_cblas,    n, r);
   
   //
   return 0;
