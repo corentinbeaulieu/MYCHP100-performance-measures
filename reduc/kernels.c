@@ -104,3 +104,10 @@ f64 reduc_unroll16 (f64 *restrict a, u64 n)
   return d;
 }
 
+// Cblas implementation of double precision 1-norm (as all our elements are positive it is the same as a reduc)
+f64 reduc_cblas(f64 *restrict a, u64 n) {
+
+    return cblas_dasum(n, a, 1);
+
+}
+
