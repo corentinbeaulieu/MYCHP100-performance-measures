@@ -25,10 +25,8 @@ f64 dotprod_unroll4(f64 *restrict a, f64 *restrict b, u64 n) {
   #define UNROLL4 4
 
   double d = 0.0;
-  const u64 endFor = n - UNROLL4;
-  u64 i;
 
-  for(i = 0; i < endFor; i += UNROLL4) {
+  for(u64 i = 0; i < (n - (n & (UNROLL4 - 1))); i += UNROLL4) {
 
       d += a[i]     * b[i];
       d += a[i + 1] * b[i + 1];
@@ -36,9 +34,8 @@ f64 dotprod_unroll4(f64 *restrict a, f64 *restrict b, u64 n) {
       d += a[i + 3] * b[i + 3];
   }
 
-  while(i < n) {
+  for(u64 i = (n - (n & 3)); i < n; i++ ) {
     d += a[i]     * b[i];
-    i++;
   }
 
   return d;
@@ -50,10 +47,8 @@ f64 dotprod_unroll8(f64 *restrict a, f64 *restrict b, u64 n) {
   #define UNROLL8 8
 
   double d = 0.0;
-  const u64 endFor = n - UNROLL8;
-  u64 i;
 
-  for(i = 0; i < endFor; i += UNROLL8) {
+  for(u64 i = 0; i < (n - (n & (UNROLL8 - 1))); i += UNROLL8) {
 
       d += a[i]     * b[i];
       d += a[i + 1] * b[i + 1];
@@ -65,9 +60,8 @@ f64 dotprod_unroll8(f64 *restrict a, f64 *restrict b, u64 n) {
       d += a[i + 7] * b[i + 7];
   }
 
-  while(i < n) {
+  for(u64 i = (n - (n & 7)); i < n; i++ ) {
     d += a[i]     * b[i];
-    i++;
   }
 
   return d;
@@ -79,10 +73,8 @@ f64 dotprod_unroll16(f64 *restrict a, f64 *restrict b, u64 n) {
   #define UNROLL16 16 
 
   double d = 0.0;
-  const u64 endFor = n - UNROLL16;
-  u64 i;
 
-  for(i = 0; i < endFor; i += UNROLL16) {
+  for(u64 i = 0; i < (n - (n & (UNROLL16 - 1))); i += UNROLL16) {
 
       d += a[i]      * b[i];
       d += a[i + 1]  * b[i + 1];
@@ -102,9 +94,8 @@ f64 dotprod_unroll16(f64 *restrict a, f64 *restrict b, u64 n) {
       d += a[i + 15] * b[i + 15];
   }
 
-  while(i < n) {
+  for(u64 i = (n - (n & 15)); i < n; i++ ) {
     d += a[i]     * b[i];
-    i++;
   }
 
   return d;

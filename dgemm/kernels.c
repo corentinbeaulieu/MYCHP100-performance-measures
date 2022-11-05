@@ -53,8 +53,7 @@ void dgemm_unroll4(f64 *restrict a, f64 *restrict b, f64 *restrict c, u64 n)
 	  {
 	     const f64 _a_ = a[i * n + k];
 	
-       u64 j;
-       for (j = 0; j < n - UNROLL4; j += UNROLL4)
+       for (u64 j = 0; j < (n - (n & (UNROLL4 - 1))); j += UNROLL4)
        {
           c[i * n + j]     +=  _a_ * b[k * n + j];
           c[i * n + j + 1] +=  _a_ * b[k * n + j + 1];
@@ -62,9 +61,8 @@ void dgemm_unroll4(f64 *restrict a, f64 *restrict b, f64 *restrict c, u64 n)
           c[i * n + j + 3] +=  _a_ * b[k * n + j + 3];
        }
 
-       while (j < n) {
+       for(u64 j = (n - (n & 3)); j < n; j++) { 
           c[i * n + j]     +=  _a_ * b[k * n + j];
-          j++;
        }
     }
   }
@@ -82,8 +80,7 @@ void dgemm_unroll8(f64 *restrict a, f64 *restrict b, f64 *restrict c, u64 n)
 	  {
 	     const f64 _a_ = a[i * n + k];
 	
-       u64 j;
-       for (j = 0; j < n - UNROLL8; j += UNROLL8)
+       for (u64 j = 0; j < (n - (n & (UNROLL8 - 1))); j += UNROLL8)
        {
           c[i * n + j]     +=  _a_ * b[k * n + j];
           c[i * n + j + 1] +=  _a_ * b[k * n + j + 1];
@@ -95,9 +92,8 @@ void dgemm_unroll8(f64 *restrict a, f64 *restrict b, f64 *restrict c, u64 n)
           c[i * n + j + 7] +=  _a_ * b[k * n + j + 7];
        }
 
-       while (j < n) {
+       for(u64 j = (n - (n & 7)); j < n; j++) { 
           c[i * n + j]     +=  _a_ * b[k * n + j];
-          j++;
        }
     }
   }
