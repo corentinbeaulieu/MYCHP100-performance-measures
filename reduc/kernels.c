@@ -25,16 +25,15 @@ f64 reduc_unroll4 (f64 *restrict a, u64 n)
   #define UNROLL4 4
 
   double d = 0.0;
-  u64 i = 0;
 
-  for (i = 0; i < n - UNROLL4; i += UNROLL4) {
+  for (u64 i = 0; i < (n - ( n & ( UNROLL4 - 1))); i += UNROLL4) {
     d += a[i];
     d += a[i+1];
     d += a[i+2];
     d += a[i+3];
   }
 
-  while(i < n) {
+  for(u64 i = (n - (n & 3)); i < n; i++) {
     d += a[i];
     i++;
   }
@@ -48,9 +47,8 @@ f64 reduc_unroll8 (f64 *restrict a, u64 n)
   #define UNROLL8 8
 
   double d = 0.0;
-  u64 i = 0;
 
-  for (i = 0; i < n - UNROLL8; i += UNROLL8) {
+  for (u64 i = 0; i < (n - ( n & ( UNROLL8 - 1))); i += UNROLL8) {
     d += a[i];
     d += a[i+1];
     d += a[i+2];
@@ -61,7 +59,7 @@ f64 reduc_unroll8 (f64 *restrict a, u64 n)
     d += a[i+7];
   }
 
-  while(i < n) {
+  for(u64 i = (n - (n & 7)); i < n; i++) {
     d += a[i];
     i++;
   }
@@ -75,9 +73,8 @@ f64 reduc_unroll16 (f64 *restrict a, u64 n)
   #define UNROLL16 16 
 
   double d = 0.0;
-  u64 i = 0;
 
-  for (i = 0; i < n - UNROLL16; i += UNROLL16) {
+  for (u64 i = 0; i < (n - ( n & ( UNROLL16 - 1))); i += UNROLL16) {
     d += a[i];
     d += a[i+1];
     d += a[i+2];
@@ -96,7 +93,7 @@ f64 reduc_unroll16 (f64 *restrict a, u64 n)
     d += a[i+15];
   }
 
-  while(i < n) {
+  for(u64 i = (n - (n & 15)); i < n; i++) {
     d += a[i];
     i++;
   }
