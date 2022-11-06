@@ -1,12 +1,11 @@
 
-set terminal png size 1200,800
-
 set grid y
 
 set auto x
 set xlabel "Compiler"
 
 set ylabel "MiB/s"
+set yrange [0:]
 
 set style data histogram
 set style histogram errorbars gap 2 lw 1

@@ -2,6 +2,7 @@
 
 
 PROC_FILE=/proc/cpuinfo
+KERNEL_FILE=/proc/version
 CACHE_DIR=/sys/devices/system/cpu/cpu0/cache/index
 INFO_FILE=$RES_DIR/arch-info.txt
 COMPILERS='gcc clang icc icx'
@@ -12,7 +13,7 @@ echo -e "##### General CPU Informations #####\n" > $INFO_FILE
 cat $PROC_FILE >> $INFO_FILE
 
 echo -e "\n### Frequency Info ###\n" >> $INFO_FILE
-cpupower frequency-info >> $INFO_FILE 
+cpupower -c 1 frequency-info >> $INFO_FILE 
 
 # Caches Information
 
@@ -43,7 +44,11 @@ do
 
 done
 
-# Compilers info
+# Linux Information
+echo -e "\n##### OS info #####\n" >> $INFO_FILE
+cat $KERNEL_FILE >> $INFO_FILE
+
+# Compilers Information
 echo -e "\n\n##### Compilers Info #####\n\n" >> $INFO_FILE
 
 for cc in $COMPILERS
@@ -55,4 +60,6 @@ do
        echo "Compiler not found on this computer" >> $INFO_FILE
     fi
 done
+
+
 
