@@ -41,5 +41,9 @@ The `perf.sh` is the only file you need to execute if you want to repeat the sam
 This script will handle the compilation and execution of the different programs with different compilation files.
 Then, it will gather the output datas to create graphs using `GNUPlot`.
 
+## Credit
+
+Most of the code has been written by my teacher Yaspr.
+
 All the results of the execution of this script will be found in a `RESULTS` directory.
 
